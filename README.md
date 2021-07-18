@@ -11,4 +11,4 @@ pip install connexion[swagger-ui]
 cd api
 python api.py
 ```
-Then Open http://127.0.0.1:9090
+Then Open http://localhost:9090/v1.0/ui/

@@ -21,3 +21,57 @@ paths:
             type: object
           examples:
             "text/plain": "[cat1,cat2,cat3]"
+  /repo/list:
+    post:
+      summary: Generate repo list
+      description: Generates repos
+      operationId: api.get_repos
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Return as array
+          schema:
+            type: object
+          examples:
+            "text/plain": "[cat1,cat2,cat3]"
+  /app/flatpak/{pkgName}:
+    post:
+      summary: Search application in flatpak
+      description: Search application in flatpak
+      operationId: api.search_flatpaks
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Return as array
+          schema:
+            type: object
+          examples:
+            "text/plain": "[cat1,cat2,cat3]"
+      parameters:
+        - name: pkgName
+          in: path
+          description: Name of package
+          required: true
+          type: string
+  /app/snap/{pkgName}:
+    post:
+      summary: Search application in snap
+      description: Search application in snap
+      operationId: api.search_snaps
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Return as array
+          schema:
+            type: object
+          examples:
+            "text/plain": "[cat1,cat2,cat3]"
+      parameters:
+        - name: pkgName
+          in: path
+          description: Name of package
+          required: true
+          type: string
