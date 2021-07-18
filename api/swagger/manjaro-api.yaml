@@ -1,0 +1,23 @@
+swagger: "2.0"
+
+info:
+  title: "{{title}}"
+  version: "1.0"
+
+basePath: /v1.0
+
+paths:
+  /category/list:
+    post:
+      summary: Generate app category list
+      description: Generates application categories
+      operationId: api.get_category_list
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Return as array
+          schema:
+            type: object
+          examples:
+            "text/plain": "[cat1,cat2,cat3]"
