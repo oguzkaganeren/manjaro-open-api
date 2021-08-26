@@ -75,3 +75,23 @@ paths:
           description: Name of package
           required: true
           type: string
+  /app/{pkgName}:
+    post:
+      summary: Search application
+      description: Search application
+      operationId: api.search_pkgs
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Return as array
+          schema:
+            type: object
+          examples:
+            "text/plain": "[cat1,cat2,cat3]"
+      parameters:
+        - name: pkgName
+          in: path
+          description: Name of package
+          required: true
+          type: string
