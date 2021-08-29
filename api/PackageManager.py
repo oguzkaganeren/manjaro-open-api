@@ -213,6 +213,22 @@ class Pamac():
         """
         return self.db.get_categories_names()
 
+    def get_pkgs(self,pageNumber)->list:
+        """
+        return 20 * (repo count) available native package according to the pageNumber
+        """
+        pkgs = []   
+        for repo in self.get_repos():
+            repository = self.db.get_repo_pkgs(repo)
+            index=0
+            for pkg in repository:
+                if index >= 20*pageNumber and index<20*(pageNumber+1):
+                    pkgs.append(pkg)
+                elif not (index<20*(pageNumber+1)):
+                    break;
+                index +=1
+        return pkgs
+
     def get_all_pkgs(self) -> list:
         """
         return all available native packages

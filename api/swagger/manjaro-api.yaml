@@ -95,3 +95,23 @@ paths:
           description: Name of package
           required: true
           type: string
+  /app/list{pageNumber}:
+    post:
+      summary: Generate app list
+      description: Generates list
+      operationId: api.get_pkgs
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Return as array
+          schema:
+            type: object
+          examples:
+            "text/plain": "[cat1,cat2,cat3]"
+      parameters:
+        - name: pageNumber
+          in: path
+          description: Number of page
+          required: true
+          type: integer
