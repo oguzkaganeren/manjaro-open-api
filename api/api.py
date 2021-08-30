@@ -13,8 +13,22 @@ def get_category_list() -> list:
 def get_repos() -> list:
     return pmc.get_repos()
 
-def get_pkgs(pageNumber:float) -> list:
-    pkgs = pmc.get_pkgs(pageNumber)
+def get_pkgs(repoName:str,pageNumber:float) -> list:
+    pkgs = pmc.get_pkgs(repoName,pageNumber)
+    pkgListRt = []
+    for x in range(len(pkgs)):
+        pkgListRt.append(get_package_details_json(pkgs[x]))
+    return pkgListRt
+
+def get_pkgs_flatpaks(pageNumber:float)->list:
+    pkgs = pmc.get_pkgs_flatpaks(pageNumber)
+    pkgListRt = []
+    for x in range(len(pkgs)):
+        pkgListRt.append(get_package_details_json(pkgs[x]))
+    return pkgListRt
+
+def get_pkgs_snaps(pageNumber:float)->list:
+    pkgs = pmc.get_pkgs_snaps(pageNumber)
     pkgListRt = []
     for x in range(len(pkgs)):
         pkgListRt.append(get_package_details_json(pkgs[x]))
@@ -45,24 +59,25 @@ def get_package_details_json(pkg) -> str:
     data = {}
     data['app_id'] = pkg.get_app_id()
     data['app_name'] = pkg.get_app_name()
-    data['build_date'] = pkg.get_build_date().format ("%x") 
     data['desc']=pkg.get_desc()
     data['download_size']=pkg.get_download_size()
-    data['files']=pkg.get_files()
-    data['groups']=pkg.get_groups()
-    data['has_signature']=pkg.get_has_signature()
+    if type(pkg).__name__ != "PamacSnapPackageLinked":
+        data['files']=pkg.get_files()
+        data['groups']=pkg.get_groups()
+        data['has_signature']=pkg.get_has_signature()
+        data['build_date'] = pkg.get_build_date().format ("%x") 
+        data['makedepends']=pkg.get_makedepends()
+        data['optdepends']=pkg.get_optdepends()
+        data['optionalfor']=pkg.get_optionalfor()
+        data['packager']=pkg.get_packager()
+        data['provides']=pkg.get_provides()
+        data['requiredby']=pkg.get_requiredby()
     data['icon']=pkg.get_icon()
     data['id']=pkg.get_id()
     data['license']=pkg.get_license()
     data['long_desc']=pkg.get_long_desc()
-    data['makedepends']=pkg.get_makedepends()
     data['name']=pkg.get_name()
-    data['optdepends']=pkg.get_optdepends()
-    data['optionalfor']=pkg.get_optionalfor()
-    data['packager']=pkg.get_packager()
-    data['provides']=pkg.get_provides()
     data['repo']=pkg.get_repo()
-    data['requiredby']=pkg.get_requiredby()
     data['screenshots']=pkg.get_screenshots()
     data['url']=pkg.get_url()
     data['version']=pkg.get_version()

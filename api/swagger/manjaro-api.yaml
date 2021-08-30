@@ -95,11 +95,56 @@ paths:
           description: Name of package
           required: true
           type: string
-  /app/list{pageNumber}:
+  /app/list/{repoName}/{pageNumber}:
     post:
       summary: Generate app list
       description: Generates list
       operationId: api.get_pkgs
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Return as array
+          schema:
+            type: object
+          examples:
+            "text/plain": "[cat1,cat2,cat3]"
+      parameters:
+        - name: repoName
+          in: path
+          description: Name of repo
+          required: true
+          type: string
+        - name: pageNumber
+          in: path
+          description: Number of page
+          required: true
+          type: integer
+  /app/flatpak/list/{pageNumber}:
+    post:
+      summary: Generate flatpak app list
+      description: Generates flatpak list
+      operationId: api.get_pkgs_flatpaks
+      produces:
+        - text/plain;
+      responses:
+        200:
+          description: Return as array
+          schema:
+            type: object
+          examples:
+            "text/plain": "[cat1,cat2,cat3]"
+      parameters:
+        - name: pageNumber
+          in: path
+          description: Number of page
+          required: true
+          type: integer
+  /app/snap/list/{pageNumber}:
+    post:
+      summary: Generate snap app list
+      description: Generates snap list
+      operationId: api.get_pkgs_snaps
       produces:
         - text/plain;
       responses:

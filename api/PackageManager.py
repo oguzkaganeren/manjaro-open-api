@@ -213,20 +213,74 @@ class Pamac():
         """
         return self.db.get_categories_names()
 
-    def get_pkgs(self,pageNumber)->list:
+    def get_pkgs(self,repoName,pageNumber)->list:
         """
-        return 20 * (repo count) available native package according to the pageNumber
+        return 20 available native packages by pageNumber
         """
         pkgs = []   
-        for repo in self.get_repos():
-            repository = self.db.get_repo_pkgs(repo)
-            index=0
-            for pkg in repository:
-                if index >= 20*pageNumber and index<20*(pageNumber+1):
-                    pkgs.append(pkg)
-                elif not (index<20*(pageNumber+1)):
-                    break;
-                index +=1
+        repository = self.db.get_repo_pkgs(repoName)
+        index=0
+        for pkg in repository:
+            if index >= 20*pageNumber and index<20*(pageNumber+1):
+                pkgs.append(pkg)
+            elif not (index<20*(pageNumber+1)):
+                break;
+            index +=1
+        return pkgs
+
+    def get_pkgs_flatpaks(self,pageNumber)->list:
+        """
+        return 20 available flatpaks packages by pageNumber
+        """
+        pkgs = []
+        def on_category_flatpaks_ready_callback(source_object, result):
+            try:
+                snaps = source_object.get_category_flatpaks_finish(result)
+            except GLib.GError as e:
+                print("Error: ", e.message)
+            else:
+                index=0
+                for pkg in snaps:
+                    if index >= 20*pageNumber and index<20*(pageNumber+1):
+                        pkgs.append(pkg)
+                    elif not (index<20*(pageNumber+1)):
+                        break;
+                    index +=1
+            finally:
+                self.loop.quit()
+
+        for cat in self.get_categories():
+            self.db.get_category_flatpaks_async(
+                cat, on_category_flatpaks_ready_callback)
+            self.loop.run()
+
+        return pkgs
+
+    def get_pkgs_snaps(self,pageNumber)->list:
+        """
+        return 20 available snaps packages by pageNumber
+        """
+        pkgs = []
+        def callback(source_object, result):
+            try:
+                snaps = source_object.get_category_snaps_finish(result)
+            except GLib.GError as e:
+                print("Error: ", e.message)
+            else:
+                index=0
+                for pkg in snaps:
+                    if index >= 20*pageNumber and index<20*(pageNumber+1):
+                        pkgs.append(pkg)
+                    elif not (index<20*(pageNumber+1)):
+                        break;
+                    index +=1
+            finally:
+                self.loop.quit()
+
+        for cat in self.get_categories():
+            self.db.get_category_snaps_async(cat, callback)
+            self.loop.run()
+
         return pkgs
 
     def get_all_pkgs(self) -> list:
