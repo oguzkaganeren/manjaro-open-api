@@ -3,6 +3,7 @@ import connexion
 from PackageManager import Pamac
 import json
 import datetime
+from swagger_ui_bundle import swagger_ui_3_path
 
 pmc=Pamac()
         
@@ -84,6 +85,7 @@ def get_package_details_json(pkg) -> str:
     return data
 
 if __name__ == '__main__':
-    app = connexion.FlaskApp(__name__, port=9090, specification_dir='swagger/')
-    app.add_api('manjaro-api.yaml', arguments={'title': 'Hello World Example'})
+    options = {'swagger_path': swagger_ui_3_path}
+    app = connexion.FlaskApp(__name__, port=9090, specification_dir='swagger/', options=options)
+    app.add_api('manjaro-api.yaml', arguments={'title': 'Manjaro Api'})
     app.run()
