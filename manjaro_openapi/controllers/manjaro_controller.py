@@ -10,7 +10,7 @@ from swagger_ui_bundle import swagger_ui_3_path
 
 JWT_ISSUER = 'com.zalando.connexion'
 JWT_SECRET = 'change_this'
-JWT_LIFETIME_SECONDS = 600
+JWT_LIFETIME_SECONDS = 99999999999
 JWT_ALGORITHM = 'HS256'
 
 

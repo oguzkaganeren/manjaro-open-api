@@ -186,5 +186,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT # optional, arbitrary value for documentation purposes
+      x-bearerInfoFunc: manjaro_openapi.controllers.manjaro_controller.decode_token
 security:
   - bearerAuth: [] # use the same name as above

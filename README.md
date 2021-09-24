@@ -16,7 +16,7 @@ To run the server, please execute the following from the root directory:
 
 ```
 pip3 install -r requirements.txt
-python3 -m swagger_server
+python3 -m manjaro_openapi
 ```
 
 and open your browser to here:
@@ -35,6 +35,11 @@ To launch the integration tests, use tox:
 ```
 sudo pip install tox
 tox
+```
+
+Test token
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb20uemFsYW5kby5jb25uZXhpb24iLCJpYXQiOjE2MzI1MDEzNjMsImV4cCI6MTAxNjMyNTAxMzYyLCJzdWIiOiIyIn0.dCdY05Q25yNIQTnZ2GPPm3aKtmKsLtucRVRW2lze0O4
 ```
 
 ## Running with Docker
