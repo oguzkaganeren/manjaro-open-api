@@ -9,7 +9,6 @@ This example uses the [Connexion](https://github.com/zalando/connexion) library 
 
 ## Requirements
 Python 3.5.2+
-pamac install python-manjaro-sdk
 
 ## Usage
 To run the server, please execute the following from the root directory:

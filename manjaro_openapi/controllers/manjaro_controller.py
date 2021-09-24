@@ -2,11 +2,13 @@
 import connexion
 from jose import JWTError, jwt
 from werkzeug.exceptions import Unauthorized
-from Manjaro.SDK.PackageManager import Pamac
+from manjaro_openapi.PackageManager import Pamac
 import json
 import datetime
 import time
 from swagger_ui_bundle import swagger_ui_3_path
+
+pmc=Pamac()
 
 JWT_ISSUER = 'com.zalando.connexion'
 JWT_SECRET = 'change_this'
@@ -33,8 +35,6 @@ def decode_token(token):
 
 def _current_timestamp() -> int:
     return int(time.time())
-
-pmc=Pamac()
         
 def get_category_list() -> list:
     return pmc.get_categories()
