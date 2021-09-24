@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Sample manjaro packages api
-  description: description
+  title: Manjaro Packages API
+  description: More details about manjaro packages
   version: 0.0.1
 servers:
   - url: http://localhost/v1
