@@ -1,9 +1,38 @@
 #!/usr/bin/env python3
 import connexion
-from PackageManager import Pamac
+from jose import JWTError, jwt
+from werkzeug.exceptions import Unauthorized
+from Manjaro.SDK.PackageManager import Pamac
 import json
 import datetime
+import time
 from swagger_ui_bundle import swagger_ui_3_path
+
+JWT_ISSUER = 'com.zalando.connexion'
+JWT_SECRET = 'change_this'
+JWT_LIFETIME_SECONDS = 600
+JWT_ALGORITHM = 'HS256'
+
+
+def generate_token(userId):
+    timestamp = _current_timestamp()
+    payload = {
+        "iss": JWT_ISSUER,
+        "iat": int(timestamp),
+        "exp": int(timestamp + JWT_LIFETIME_SECONDS),
+        "sub": str(userId),
+    }
+
+    return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+def decode_token(token):
+    try:
+        return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+    except JWTError as e:
+        raise Unauthorized from e
+
+def _current_timestamp() -> int:
+    return int(time.time())
 
 pmc=Pamac()
         

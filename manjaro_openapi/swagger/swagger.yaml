@@ -1,0 +1,190 @@
+openapi: 3.0.0
+info:
+  title: Sample manjaro packages api
+  description: description
+  version: 0.0.1
+servers:
+  - url: http://localhost/v1
+    description: Optional server description, e.g. Main (production) server
+  - url: http://localhost
+    description: Optional server description, e.g. Internal staging server for testing
+paths:
+  /auth/{userId}:
+    get:
+      summary: Return JWT token
+      operationId: manjaro_openapi.controllers.manjaro_controller.generate_token
+      parameters:
+        - name: userId
+          in: path
+          description: Name of package
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: JWT token
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
+  /category/list:
+    post:
+      summary: Generate app category list
+      description: Generates application categories
+      operationId: manjaro_openapi.controllers.manjaro_controller.get_category_list
+      responses:
+        200:
+          description: Return as array
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "[cat1,cat2,cat3]"
+  /repo/list:
+    post:
+      summary: Generate repo list
+      description: Generates repos
+      operationId: manjaro_openapi.controllers.manjaro_controller.get_repos
+      responses:
+        200:
+          description: Return as array
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "[cat1,cat2,cat3]"
+  /app/flatpak/{pkgName}:
+    post:
+      summary: Search application in flatpak
+      description: Search application in flatpak
+      operationId: manjaro_openapi.controllers.manjaro_controller.search_flatpaks
+      responses:
+        200:
+          description: Return as array
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "[cat1,cat2,cat3]"
+      parameters:
+        - in: path
+          name: pkgName
+          schema:
+            type: string
+          required: true
+          description: Name of package
+  /app/snap/{pkgName}:
+    post:
+      summary: Search application in snap
+      description: Search application in snap
+      operationId: manjaro_openapi.controllers.manjaro_controller.search_snaps
+      responses:
+        200:
+          description: Return as array
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "[cat1,cat2,cat3]"
+      parameters:
+        - in: path
+          name: pkgName
+          schema:
+            type: string
+          required: true
+          description: Name of package
+  /app/{pkgName}:
+    post:
+      summary: Search application
+      description: Search application
+      operationId: manjaro_openapi.controllers.manjaro_controller.search_pkgs
+      responses:
+        200:
+          description: Return as array
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "[cat1,cat2,cat3]"
+      parameters:
+        - in: path
+          name: pkgName
+          schema:
+            type: string
+          required: true
+          description: Name of package
+  /app/list/{repoName}/{pageNumber}:
+    post:
+      summary: Generate app list
+      description: Generates list
+      operationId: manjaro_openapi.controllers.manjaro_controller.get_pkgs
+      responses:
+        200:
+          description: Return as array
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "[cat1,cat2,cat3]"
+      parameters:
+        - name: repoName
+          in: path
+          description: Name of repo
+          required: true
+          schema:
+            type: string
+        - name: pageNumber
+          in: path
+          description: Number of page
+          required: true
+          schema:
+            type: integer
+  /app/flatpak/list/{pageNumber}:
+    post:
+      summary: Generate flatpak app list
+      description: Generates flatpak list
+      operationId: manjaro_openapi.controllers.manjaro_controller.get_pkgs_flatpaks
+      responses:
+        200:
+          description: Return as array
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "[cat1,cat2,cat3]"
+      parameters:
+        - name: pageNumber
+          in: path
+          description: Number of page
+          required: true
+          schema:
+            type: integer
+  /app/snap/list/{pageNumber}:
+    post:
+      summary: Generate snap app list
+      description: Generates snap list
+      operationId: manjaro_openapi.controllers.manjaro_controller.get_pkgs_snaps
+      responses:
+        200:
+          description: Return as array
+          content:
+            text/plain:
+              schema:
+                type: object
+                example: "[cat1,cat2,cat3]"
+      parameters:
+        - name: pageNumber
+          in: path
+          description: Number of page
+          required: true
+          schema:
+            type: integer
+components:
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT # optional, arbitrary value for documentation purposes
+security:
+  - bearerAuth: [] # use the same name as above
